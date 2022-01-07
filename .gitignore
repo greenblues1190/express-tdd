@@ -1,5 +1,8 @@
 # dependency directories
 node_modules/
 
+# sqlite files
+db.sqlite
+
 # Mac files
 .DS_Store

@@ -3,6 +3,16 @@
 const request = require('supertest');
 const should = require('should');
 const app = require('../../index');
+const { sequelize, User } = require('../../models/models');
+
+const users = [
+  { name: 'alice' },
+  { name: 'bob' },
+  { name: 'claire' },
+  { name: 'dan' },
+];
+before(() => sequelize.sync({ force: true }));
+before(() => User.bulkCreate(users));
 
 describe('GET /api/users는', () => {
   describe('성공 시', () => {
@@ -21,7 +31,7 @@ describe('GET /api/users는', () => {
         .get('/api/users?limit=2')
         .end((err, res) => {
           const result = res.body;
-          result.length.should.be.exactly(2);
+          result.should.have.lengthOf(2);
           done();
         });
     });
